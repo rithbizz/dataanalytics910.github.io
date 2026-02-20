@@ -1,0 +1,1250 @@
+---
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    slide-number: true
+    transition: fade
+    font-family: 'Trebuchet MS'
+    scrollable: true
+---
+
+<style>
+body {
+  font-family: 'Trebuchet MS', sans-serif;
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  color: #2980b9;
+}
+.reveal {
+  font-family: 'Trebuchet MS', sans-serif;
+}
+</style>
+
+<div style="text-align:center; margin-top: 40px; line-height: 1.4;">
+
+  <img src="https://pelprek.sgp1.digitaloceanspaces.com/banner/3489/148825024520275.png" alt="PPIU Logo" style="width: 400px; margin-bottom: 20px;">
+
+  <h1 style="font-size: 3em; font-weight: 700; color: #2980b9; margin-bottom: 10px;">
+    Statistics for Data Analysis
+  </h1>
+
+  <h2 style="font-size: 1.6em; font-weight: 500; color: #555;">
+    Descriptive Statistics: Central Tendency & Dispersion
+  </h2>
+
+  <div style="border-bottom: 4px solid #e74c3c; width: 45%; margin: 18px auto;"></div>
+  <h3 style="margin-top: 25px; font-weight: 700; color: #050E3C">
+    By: MIN Sothearith
+  </h3>
+
+  <h4 style="font-weight: 700; color: #666;">
+    Phnom Penh International University
+  </h4>
+
+</div>
+
+## Welcome! 📊
+
+<div style="text-align:center; margin-top: 40px;">
+  <h3 style="color: #2980b9;">Understanding Data Through Numbers</h3>
+
+  <p style="font-size: 1.4em; margin-top: 50px;">
+    Today we learn how to <strong>summarize</strong>, <strong>describe</strong>, and <strong>understand</strong> data using statistics! 🚀
+  </p>
+</div>
+
+::: {.callout-note}
+## 💡 Why It Matters
+Raw data is just a pile of numbers. Descriptive statistics turns that pile into **insight** — answering "what is typical?" and "how spread out is the data?"
+:::
+
+## Today's Plan
+
+**Descriptive Statistics — 3 Hours:**
+
+1. **Introduction** — What is descriptive statistics and why do we use it?
+2. **Part 1: Measures of Central Tendency** — Mean, Median, Mode
+3. **Part 2: Measures of Dispersion** — Range, Variance, Standard Deviation, IQR
+4. **Part 3: Choosing the Right Measure** — When to use what
+5. **Part 4: Real-World Use Cases & Projects**
+6. **Part 5: Computing with Python**
+
+::: {.callout-tip}
+**⏱️ Time:** ~3 hours | **📝 Goal:** Describe any dataset with confidence using the right statistics!
+:::
+
+## Learning Objectives
+
+**By the end of this class, you will:**
+
+- Understand what descriptive statistics summarizes about data
+- Calculate and interpret mean, median, and mode
+- Calculate and interpret range, variance, standard deviation, and IQR
+- Know which measure is best for different types of data
+- Detect outliers and understand their effect
+- Apply descriptive statistics to real-world datasets using Python
+
+::: {.callout-important}
+## 🎯 Hands-On Learning
+Every concept comes with manual calculation, real-world examples, and Python code!
+:::
+
+---
+
+# Introduction: What is Descriptive Statistics?
+
+## Data Without Statistics
+
+Imagine you receive this dataset — exam scores from 20 students:
+
+```
+72, 85, 91, 63, 78, 55, 88, 94, 71, 67,
+82, 79, 95, 60, 74, 88, 53, 77, 83, 69
+```
+
+**Questions a teacher might ask:**
+
+- What is the *typical* score in this class?
+- Are students' scores close together or very spread out?
+- Is the class performing well overall?
+- Are there any unusually high or low scores?
+
+::: {.callout-note}
+## 💡 The Problem
+20 numbers are manageable. But what about 2,000? Or 200,000?
+We need tools to **summarize** data into meaningful numbers.
+:::
+
+## Two Main Questions in Descriptive Statistics
+
+::: {style="text-align:center; margin-top: 20px;"}
+
+| Question | Answered By | Examples |
+|----------|-------------|---------|
+| **What is the typical value?** | Measures of **Central Tendency** | Mean, Median, Mode |
+| **How spread out is the data?** | Measures of **Dispersion** | Range, Variance, Std Dev, IQR |
+
+:::
+
+```
+Data: 55, 63, 67, 69, 71, 72, 74, 77, 78, 79,
+      82, 83, 85, 88, 88, 91, 94, 95, 53, 60
+
+Central Tendency → "The typical score is around 76"
+Dispersion       → "Scores range from 53 to 95 — quite spread out"
+```
+
+::: {.callout-tip}
+## 💡 Together they tell the full story
+A mean of 76 means very different things if the std deviation is 3 (tight cluster) vs 20 (very spread out).
+:::
+
+## Real-World Applications
+
+**Where descriptive statistics is used every day:**
+
+- 🏥 **Healthcare** — Average patient recovery time, spread of blood pressure readings
+- 🏫 **Education** — Class average, score distribution, identifying struggling students
+- 💰 **Finance** — Average stock return, volatility (dispersion) of investments
+- 🌦️ **Weather** — Mean temperature, typical rainfall variation
+- 🏭 **Manufacturing** — Average product weight, quality control tolerance
+- 🛒 **Business** — Average customer spending, variation in daily sales
+- ⚽ **Sports** — Average goals per game, consistency of a player's performance
+
+::: {.callout-important}
+## 🎯 Before any advanced analysis
+Descriptive statistics is always the **first step** — you must understand your data before modeling it!
+:::
+
+---
+
+# Part 1: Measures of Central Tendency
+
+## What is Central Tendency?
+
+::: {style="text-align:center; margin-top: 30px;"}
+### A measure of **central tendency** finds the **center** or **typical value** of a dataset {style="color: #2980b9; font-size: 1.4em;"}
+:::
+
+**Three measures:**
+
+| Measure | Definition | Best For |
+|---------|-----------|---------|
+| **Mean** | Sum of all values ÷ count | Symmetric data, no outliers |
+| **Median** | Middle value when sorted | Skewed data, outliers present |
+| **Mode** | Most frequently occurring value | Categorical data, finding peaks |
+
+**Intuition:**
+
+- **Mean** — the "fair share" if you redistributed everything equally
+- **Median** — the "middle person" in a line sorted by height
+- **Mode** — the "most popular" item in a store
+
+## 1.1 — The Mean (Average)
+
+**Formula:**
+
+$$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} = \frac{x_1 + x_2 + \cdots + x_n}{n}$$
+
+**Step-by-step example — Weekly sales ($):**
+
+```
+Data: 200, 350, 280, 410, 300
+```
+
+**Calculate:**
+
+$$\bar{x} = \frac{200 + 350 + 280 + 410 + 300}{5} = \frac{1540}{5} = 308$$
+
+The **mean weekly sales is $308**.
+
+::: {.callout-tip}
+## 💡 Intuition
+If you spread the total sales ($1,540) equally across all 5 days, each day would have $308.
+:::
+
+## Mean — More Examples
+
+**Example 1: Student test scores**
+```
+Scores: 70, 85, 90, 60, 75
+Mean = (70 + 85 + 90 + 60 + 75) / 5 = 380 / 5 = 76
+```
+
+**Example 2: Daily temperatures (°C)**
+```
+Mon: 28, Tue: 31, Wed: 29, Thu: 35, Fri: 27, Sat: 30, Sun: 32
+Mean = (28+31+29+35+27+30+32) / 7 = 212 / 7 ≈ 30.3°C
+```
+
+**Example 3: Hospital patient ages**
+```
+Ages: 25, 34, 45, 67, 23, 54, 38, 29
+Mean = (25+34+45+67+23+54+38+29) / 8 = 315 / 8 ≈ 39.4 years
+```
+
+::: {.callout-note}
+## 🔢 Symbol note
+$\bar{x}$ (x-bar) = sample mean | $\mu$ (mu) = population mean
+:::
+
+## Mean — The Outlier Problem
+
+The mean is **sensitive to extreme values (outliers)**:
+
+**Example: Monthly salaries at a small company ($)**
+```
+Employee A: 1,200
+Employee B: 1,400
+Employee C: 1,300
+Employee D: 1,500
+CEO:       50,000
+```
+
+$$\bar{x} = \frac{1200 + 1400 + 1300 + 1500 + 50000}{5} = \frac{55400}{5} = 11080$$
+
+**Is $11,080 a "typical" salary here? NO!** Four out of five people earn around $1,350.
+
+::: {.callout-warning}
+## ⚠️ Outlier Effect
+One extreme value (the CEO's salary) pulled the mean far above the typical salary.
+This is when we use the **Median** instead!
+:::
+
+## 1.2 — The Median
+
+**The Median is the middle value when data is sorted.**
+
+**Steps to find the Median:**
+
+1. **Sort** the data from smallest to largest
+2. **If n is odd** → median = middle value
+3. **If n is even** → median = average of two middle values
+
+**Example 1 (odd count — 5 values):**
+```
+Unsorted: 85, 70, 90, 60, 75
+Sorted:   60, 70, 75, 85, 90
+                   ↑
+              Median = 75
+```
+
+**Example 2 (even count — 6 values):**
+```
+Unsorted: 85, 70, 90, 60, 75, 80
+Sorted:   60, 70, 75, 80, 85, 90
+                   ↑  ↑
+              Median = (75 + 80) / 2 = 77.5
+```
+
+## Median — Resistant to Outliers
+
+**Same salary example as before:**
+```
+Sorted: 1,200 | 1,300 | 1,400 | 1,500 | 50,000
+                          ↑
+                    Median = 1,400
+```
+
+**Mean = $11,080** — misleading!
+**Median = $1,400** — much more representative of a typical employee!
+
+::: {.callout-important}
+## 🎯 Key Insight
+- Real estate: "median home price" (not mean) — because a few mansions skew the mean
+- Income reports: "median household income" — because billionaires skew the mean
+- The **median** always tells you "half the values are below this, half are above"
+:::
+
+## Median — More Examples
+
+**Example: House prices in a neighborhood ($1000s)**
+```
+Sorted: 120, 135, 150, 165, 180, 195, 850
+                         ↑
+                    Median = 165 (thousand)
+Mean = (120+135+150+165+180+195+850)/7 = 256 (thousand)
+```
+The $850k mansion pulls the mean to $256k, but median says $165k is typical.
+
+**Example: Response times for a website (ms)**
+```
+Sorted: 120, 125, 130, 135, 140, 145, 980
+Median = 135 ms   ← typical user experience
+Mean   = 253 ms   ← distorted by 1 slow request
+```
+
+::: {.callout-tip}
+## 💡 Use Median when
+Your data has outliers, or is skewed (not symmetric).
+:::
+
+## 1.3 — The Mode
+
+**The Mode is the value that appears most frequently.**
+
+**Simple example:**
+```
+Data: 3, 7, 3, 9, 3, 5, 7, 2
+Mode = 3  (appears 3 times — more than any other)
+```
+
+**Multiple modes:**
+```
+Data: 2, 4, 4, 6, 8, 8, 10
+Mode = 4 and 8  (both appear twice → Bimodal)
+```
+
+**No mode:**
+```
+Data: 1, 2, 3, 4, 5
+Mode = None  (all values appear once)
+```
+
+::: {.callout-note}
+## 🔢 Types of mode distribution
+- **Unimodal** — one mode (one peak)
+- **Bimodal** — two modes (two peaks)
+- **Multimodal** — three or more modes
+- **No mode** — all values unique
+:::
+
+## Mode — Real-World Use Cases
+
+**Example 1: Shoe sizes sold in a store**
+```
+Sizes: 38, 40, 39, 41, 40, 40, 38, 42, 40, 39
+Mode = 40  ← The store should stock the most size 40!
+```
+
+**Example 2: Favorite subject (survey of 15 students)**
+```
+Math, Science, Math, Khmer, English, Math, Science,
+Math, English, Khmer, Math, Science, Math, English, Math
+Mode = Math  ← Most popular subject
+```
+
+**Example 3: Number of siblings**
+```
+Data: 0, 1, 2, 1, 3, 1, 0, 2, 1, 4, 1
+Mode = 1  ← Most families have 1 sibling
+```
+
+::: {.callout-important}
+## 🎯 Mode is the ONLY measure for categorical data
+You cannot compute a mean or median of colors, names, or categories — but you CAN find a mode!
+:::
+
+## Comparing Mean, Median, Mode
+
+**Dataset: Monthly income of 9 households ($)**
+```
+800, 900, 950, 1000, 1050, 1100, 1200, 1300, 8000
+```
+
+| Measure | Value | Interpretation |
+|---------|-------|---------------|
+| **Mean** | $1,811 | Pulled up by outlier |
+| **Median** | $1,050 | Middle household income |
+| **Mode** | None | All values unique |
+
+::: {.callout-tip}
+## 💡 Which to report?
+In this case, **median** best represents a "typical" household.
+The mean of $1,811 would mislead people into thinking incomes are higher than they really are.
+:::
+
+## Symmetric vs Skewed Data
+
+The **relationship between mean and median** reveals the shape of data:
+
+```
+Symmetric (normal):   Mean ≈ Median ≈ Mode
+                      [Bell curve — mean is reliable]
+
+Right-skewed:         Mode < Median < Mean
+                      [Long tail to the right — median is safer]
+                      Example: income, house prices
+
+Left-skewed:          Mean < Median < Mode
+                      [Long tail to the left]
+                      Example: age at retirement
+```
+
+::: {.callout-note}
+## 🔍 Quick check
+If mean > median → data is likely right-skewed (pulled by high outliers)
+If mean < median → data is likely left-skewed (pulled by low outliers)
+:::
+
+## Practice 1A — Calculate by Hand
+
+**Dataset: Exam scores of 10 students**
+```
+88, 73, 95, 61, 88, 77, 84, 91, 61, 72
+```
+
+Calculate:
+
+1. **Mean** = ?
+2. **Median** = ? *(sort first!)*
+3. **Mode** = ?
+
+::: {.callout-tip}
+## ✏️ Work it out
+Sorted: 61, 61, 72, 73, 77, 84, 88, 88, 91, 95
+
+Mean   = (61+61+72+73+77+84+88+88+91+95) / 10 = 790 / 10 = **79.0**
+
+Median = (77 + 84) / 2 = **80.5**  ← average of 5th and 6th values
+
+Mode   = **61 and 88**  ← both appear twice (Bimodal)
+:::
+
+## Practice 1B — Salary Analysis
+
+**A company has these employee salaries ($/month):**
+```
+2,500 | 2,800 | 3,100 | 2,800 | 2,600 | 2,800 | 45,000
+```
+
+1. Compute the **mean**, **median**, and **mode**
+2. Which measure best represents a "typical" salary? Why?
+3. The CEO earns $45,000 — how does this affect each measure?
+
+::: {.callout-tip}
+## ✏️ Solution
+Mean   = (2500+2800+3100+2800+2600+2800+45000)/7 = 61600/7 ≈ **$8,800**
+
+Sorted: 2500, 2600, 2800, 2800, 2800, 3100, 45000
+
+Median = **$2,800**  (4th value)
+
+Mode   = **$2,800**  (appears 3 times)
+
+→ **Median and Mode are better here.** The CEO's salary ($45k) inflates the mean dramatically.
+:::
+
+---
+
+# Part 2: Measures of Dispersion
+
+## What is Dispersion?
+
+::: {style="text-align:center; margin-top: 30px;"}
+### **Dispersion** measures how **spread out** or **scattered** the data values are {style="color: #2980b9; font-size: 1.4em;"}
+:::
+
+**Why does it matter?**
+
+```
+Class A scores: 75, 76, 74, 75, 75, 76    → Mean = 75.2
+Class B scores: 50, 60, 95, 40, 100, 81   → Mean = 71.0
+```
+
+Just knowing the mean doesn't tell the whole story! Class A is consistent; Class B is wildly varied.
+
+**Four key measures of dispersion:**
+
+| Measure | What it tells you |
+|---------|------------------|
+| **Range** | The full spread (max − min) |
+| **Variance** | Average squared distance from the mean |
+| **Standard Deviation** | Typical distance from the mean |
+| **IQR** | Spread of the middle 50% |
+
+## 2.1 — Range
+
+**Range = Maximum value − Minimum value**
+
+$$\text{Range} = x_{\max} - x_{\min}$$
+
+**Example 1: Daily temperatures (°C)**
+```
+Data: 22, 27, 31, 19, 35, 28, 24
+Min = 19,  Max = 35
+Range = 35 − 19 = 16°C
+```
+
+**Example 2: Marathon finishing times (minutes)**
+```
+Data: 210, 185, 240, 195, 228, 175, 260
+Min = 175,  Max = 260
+Range = 260 − 175 = 85 minutes
+```
+
+**Example 3: Student test scores**
+```
+Data: 45, 62, 78, 88, 91, 55, 70
+Min = 45,  Max = 91
+Range = 91 − 45 = 46 points
+```
+
+::: {.callout-warning}
+## ⚠️ Limitation of Range
+Range only uses 2 values (min and max). One extreme outlier completely changes it!
+:::
+
+## Range — Limitation Example
+
+```
+Dataset A: 10, 20, 30, 40, 50
+Range = 50 − 10 = 40
+
+Dataset B: 10, 29, 30, 31, 50
+Range = 50 − 10 = 40  ← Same range!
+```
+
+But Dataset A is evenly spread; Dataset B is mostly clustered around 30.
+
+**Range cannot capture this difference.** We need better measures!
+
+::: {.callout-note}
+## 💡 Range is useful when
+- You just want a quick, simple overview
+- You are checking if any value is out of an expected range (quality control)
+- Data has no obvious outliers
+:::
+
+## 2.2 — Variance
+
+**Variance measures the average squared distance of each value from the mean.**
+
+$$s^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}$$
+
+*(We use n−1 for sample variance — Bessel's correction)*
+
+**Steps:**
+
+1. Calculate the **mean** ($\bar{x}$)
+2. Subtract the mean from each value → **deviations** $(x_i - \bar{x})$
+3. **Square** each deviation → $(x_i - \bar{x})^2$
+4. **Sum** all squared deviations
+5. **Divide** by $n - 1$
+
+::: {.callout-tip}
+## 💡 Why square the deviations?
+Without squaring, deviations above and below the mean cancel out to zero!
+Squaring makes all values positive, so large deviations have a large effect.
+:::
+
+## Variance — Step-by-Step Calculation
+
+**Dataset: Hours of study per day for 5 students**
+```
+Data: 2, 4, 4, 6, 4    → Mean = (2+4+4+6+4)/5 = 20/5 = 4
+```
+
+| $x_i$ | $x_i - \bar{x}$ | $(x_i - \bar{x})^2$ |
+|--------|-----------------|----------------------|
+| 2      | 2 − 4 = −2      | (−2)² = **4**        |
+| 4      | 4 − 4 =  0      | (0)²  = **0**        |
+| 4      | 4 − 4 =  0      | (0)²  = **0**        |
+| 6      | 6 − 4 = +2      | (+2)² = **4**        |
+| 4      | 4 − 4 =  0      | (0)²  = **0**        |
+|        | **Sum** =  0    | **Sum = 8**          |
+
+$$s^2 = \frac{8}{5 - 1} = \frac{8}{4} = 2 \text{ hours}^2$$
+
+## Variance — Why Units Are Squared
+
+::: {.callout-warning}
+## ⚠️ Variance is in squared units
+If data is in **hours**, variance is in **hours²**  
+If data is in **dollars**, variance is in **dollars²**  
+If data is in **°C**, variance is in **°C²**
+
+This makes it **hard to interpret directly** — we can't say "the typical deviation is 2 hours²"!
+
+**Solution → Standard Deviation** (take the square root)
+:::
+
+**Variance is still useful for:**
+
+- Comparing relative spread between datasets (same units)
+- Mathematical calculations in advanced statistics
+- Portfolio risk in finance (portfolio variance)
+
+## 2.3 — Standard Deviation
+
+**Standard Deviation = Square root of the Variance**
+
+$$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}$$
+
+**Continuing our example:**
+
+$$s = \sqrt{2} \approx 1.41 \text{ hours}$$
+
+**Interpretation:** On average, students deviate from the mean study time by about **1.41 hours**.
+
+::: {.callout-important}
+## 🎯 Standard Deviation is the most widely used measure of spread
+It is in the **same units as the data**, making it directly interpretable!
+:::
+
+## Standard Deviation — Full Example
+
+**Factory Machine A produces bolts with these diameters (mm):**
+```
+Data: 10.1, 10.2, 9.9, 10.0, 10.3, 9.8, 10.2
+Mean = 70.5 / 7 ≈ 10.07 mm
+```
+
+| $x_i$ | $x_i - \bar{x}$ | $(x_i - \bar{x})^2$ |
+|--------|-----------------|----------------------|
+| 10.1   | +0.03           | 0.0009 |
+| 10.2   | +0.13           | 0.0169 |
+| 9.9    | −0.17           | 0.0289 |
+| 10.0   | −0.07           | 0.0049 |
+| 10.3   | +0.23           | 0.0529 |
+| 9.8    | −0.27           | 0.0729 |
+| 10.2   | +0.13           | 0.0169 |
+
+$$s^2 = \frac{0.1943}{6} \approx 0.0324 \quad \Rightarrow \quad s \approx 0.18 \text{ mm}$$
+
+**The machine's output varies by about ±0.18 mm** — acceptable or not? Depends on tolerance!
+
+## Standard Deviation — Comparing Datasets
+
+**This is where standard deviation really shines:**
+
+```
+Archer A hits: 85, 86, 84, 85, 85, 84, 86
+Mean = 85.0,  Std Dev ≈ 0.82  ← Very consistent! 🎯
+
+Archer B hits: 70, 95, 80, 100, 65, 90, 85
+Mean = 83.6,  Std Dev ≈ 13.0  ← Very inconsistent! 😬
+```
+
+**Similar means, very different standard deviations!**
+
+::: {.callout-tip}
+## 💡 Real-world comparisons
+- **Investment risk:** Low std dev = stable returns, High std dev = volatile (risky)
+- **Manufacturing:** Low std dev = consistent quality, High std dev = defects
+- **Exam results:** Low std dev = similar performance, High std dev = mixed class
+:::
+
+## Standard Deviation — The 68-95-99.7 Rule
+
+For **normally distributed data**, standard deviation has a powerful interpretation:
+
+$$\mu \pm 1s \rightarrow \approx 68\% \text{ of data}$$
+$$\mu \pm 2s \rightarrow \approx 95\% \text{ of data}$$
+$$\mu \pm 3s \rightarrow \approx 99.7\% \text{ of data}$$
+
+**Example: Exam scores with Mean = 75, Std Dev = 10**
+```
+68% of students scored between 65 and 85   (75 ± 10)
+95% of students scored between 55 and 95   (75 ± 20)
+99.7% of students scored between 45 and 105 (75 ± 30)
+```
+
+::: {.callout-note}
+## 🔍 Practical use
+A score more than 2 standard deviations from the mean is unusual (only 5% of the data).
+This is the basis of detecting **outliers**!
+:::
+
+## 2.4 — Interquartile Range (IQR)
+
+**IQR measures the spread of the middle 50% of data.**
+
+**Steps:**
+
+1. Sort the data
+2. Find **Q1** (25th percentile — median of the lower half)
+3. Find **Q3** (75th percentile — median of the upper half)
+4. **IQR = Q3 − Q1**
+
+**Example: Delivery times (minutes)**
+```
+Sorted: 15, 18, 20, 22, 25, 28, 30, 35, 40, 45
+              ↑                          ↑
+             Q1                         Q3
+
+Lower half:  15, 18, 20, 22, 25  →  Q1 = 20
+Upper half:  28, 30, 35, 40, 45  →  Q3 = 35
+
+IQR = Q3 − Q1 = 35 − 20 = 15 minutes
+```
+
+::: {.callout-important}
+## 🎯 IQR ignores outliers completely
+Only looks at the middle 50%, so extreme values have NO effect!
+:::
+
+## IQR — Outlier Detection
+
+IQR is used to formally define outliers:
+
+$$\text{Lower fence} = Q1 - 1.5 \times IQR$$
+$$\text{Upper fence} = Q3 + 1.5 \times IQR$$
+
+**Values outside these fences are outliers!**
+
+**Example: Continuing from before (IQR = 15, Q1 = 20, Q3 = 35)**
+```
+Lower fence = 20 − 1.5 × 15 = 20 − 22.5 = −2.5
+Upper fence = 35 + 1.5 × 15 = 35 + 22.5 = 57.5
+
+Any delivery time below −2.5 or above 57.5 is an outlier.
+```
+
+Now add a bad day: `15, 18, 20, 22, 25, 28, 30, 35, 40, 45, **120**`
+```
+120 > 57.5 → 120 is an OUTLIER! 🚨
+```
+
+::: {.callout-tip}
+## 💡 Box plots
+IQR is the foundation of the **box plot** (box-and-whisker plot) — a key visualization in data analysis!
+:::
+
+## Comparing All Dispersion Measures
+
+**Dataset: Monthly expenses ($) of 8 students**
+```
+Data: 150, 200, 180, 500, 160, 190, 170, 180
+```
+
+| Measure | Value | Interpretation |
+|---------|-------|---------------|
+| Range | 500 − 150 = **$350** | Full spread — affected by $500 outlier |
+| Variance | **$10,250** | Squared dollars — hard to interpret |
+| Std Dev | **≈ $101** | Average deviation from mean |
+| IQR | **$30** | Middle 50% has only $30 variation! |
+
+::: {.callout-note}
+## 🔍 Insight
+The IQR of $30 reveals that most students spend similarly. The high range and std dev are caused by just one outlier ($500). Remove that student and the data is very tight.
+:::
+
+## Practice 2A — Calculate Dispersion by Hand
+
+**Dataset: Heights of 7 basketball players (cm)**
+```
+185, 192, 178, 201, 188, 195, 183
+```
+
+Calculate:
+
+1. **Range** = ?
+2. **Mean** = ?
+3. **Variance** = ? *(show the deviation table)*
+4. **Standard Deviation** = ?
+
+::: {.callout-tip}
+## ✏️ Solution
+Mean = (185+192+178+201+188+195+183)/7 = 1322/7 ≈ **188.9 cm**
+
+Range = 201 − 178 = **23 cm**
+
+Deviations²: (−3.9)²=15.2, (3.1)²=9.6, (−10.9)²=118.8, (12.1)²=146.4, (−0.9)²=0.8, (6.1)²=37.2, (−5.9)²=34.8
+
+Variance = (15.2+9.6+118.8+146.4+0.8+37.2+34.8)/6 = 362.8/6 ≈ **60.5 cm²**
+
+Std Dev = √60.5 ≈ **7.78 cm**
+:::
+
+## Practice 2B — IQR and Outlier Detection
+
+**Dataset: Daily number of customer complaints for 11 days**
+```
+3, 5, 4, 7, 6, 4, 5, 3, 4, 50, 5
+```
+
+1. Sort the data and find Q1, Q3, and IQR
+2. Calculate the outlier fences
+3. Identify any outliers
+4. What does the outlier suggest about that day?
+
+::: {.callout-tip}
+## ✏️ Solution
+Sorted: 3, 3, 4, 4, 4, 5, 5, 5, 6, 7, 50
+
+Q1 = 4 (median of lower half: 3,3,4,4,4)
+Q3 = 6 (median of upper half: 5,5,6,7,50)
+
+IQR = 6 − 4 = **2**
+
+Lower fence = 4 − 1.5×2 = **1**
+Upper fence = 6 + 1.5×2 = **9**
+
+50 > 9 → **50 is an outlier!** 🚨 Something unusual happened that day — investigate!
+:::
+
+---
+
+# Part 3: Choosing the Right Measure
+
+## When to Use Each Measure
+
+| Situation | Central Tendency | Dispersion |
+|-----------|-----------------|------------|
+| Symmetric data, no outliers | **Mean** | **Std Dev / Variance** |
+| Skewed data or outliers | **Median** | **IQR** |
+| Categorical data | **Mode** | N/A |
+| Finding most common value | **Mode** | — |
+| Comparing spread across groups | **Mean** | **Std Dev** |
+| Outlier detection | **Median** | **IQR** |
+| Financial risk analysis | **Mean** | **Variance / Std Dev** |
+
+::: {.callout-important}
+## 🎯 The Golden Rule
+When data has **outliers** → prefer **Median + IQR**
+When data is **clean and symmetric** → prefer **Mean + Std Dev**
+:::
+
+## Decision Guide — Real Scenarios
+
+**Scenario 1:** A city reports average income to attract investors
+→ Outliers (rich residents) exist → Use **Median**
+
+**Scenario 2:** A factory monitors bolt diameter for quality control
+→ Data should be symmetric, precise → Use **Mean + Std Dev**
+
+**Scenario 3:** A hospital tracks patient wait times
+→ Long waits are outliers → Use **Median + IQR**
+
+**Scenario 4:** A poll asks voters' favorite candidate
+→ Categorical data → Use **Mode**
+
+**Scenario 5:** A teacher compares two classes' exam consistency
+→ Compare variability → Use **Std Dev**
+
+::: {.callout-note}
+## 💡 Always visualize first!
+A quick histogram or box plot helps you see the shape of data and choose the right measure.
+:::
+
+---
+
+# Part 4: Real-World Use Cases
+
+## Use Case 1 — Analyzing Exam Results
+
+**Scenario:** A teacher has exam scores from 15 students:
+```
+55, 62, 70, 73, 75, 78, 80, 82, 82, 85, 88, 90, 92, 95, 45
+```
+
+**Analysis:**
+```
+Mean   = (sum) / 15 = 1152 / 15 = 76.8
+Median = 82  (8th value)
+Mode   = 82  (appears twice)
+Range  = 95 − 45 = 50
+Std Dev ≈ 14.2
+Q1 = 72,  Q3 = 89,  IQR = 17
+Outlier check: Lower = 72 − 25.5 = 46.5 → 45 is borderline!
+               Upper = 89 + 25.5 = 114.5 → No high outliers
+```
+
+**Insights:** Mean ≈ Median → roughly symmetric. Score of 45 may need attention. Std dev of 14.2 indicates moderate spread.
+
+## Use Case 2 — E-Commerce Sales Analysis
+
+**Scenario:** Daily revenue ($) for an online store over 10 days:
+```
+1200, 980, 1450, 1100, 1320, 850, 5600, 1250, 1180, 1070
+```
+
+```
+Mean   = 15000 / 10 = $1,500
+Median = (1200 + 1250) / 2 = $1,225   ← better "typical day"
+Mode   = None (all unique)
+Range  = 5600 − 850 = $4,750
+Std Dev ≈ $1,398  (very large — driven by $5,600 outlier)
+Q1 = 1035, Q3 = 1387.5, IQR = $352.5
+Outlier: Upper fence = 1387.5 + 1.5×352.5 = $1,916
+→ $5,600 IS an outlier! (Probably a flash sale or viral post)
+```
+
+**Business insight:** A "typical" day brings in ~$1,225. The $5,600 day was exceptional — don't plan budgets around it!
+
+## Use Case 3 — Quality Control in Manufacturing
+
+**Scenario:** A machine fills bottles with juice. Target: 500ml. Sample (ml):
+```
+499.2, 500.1, 498.8, 500.5, 499.7, 500.2, 501.0, 499.5, 500.3, 498.9
+```
+
+```
+Mean   = 4998.2 / 10 = 499.82 ml   (close to target ✅)
+Std Dev ≈ 0.67 ml
+
+Acceptable range: 500 ± 2ml = [498, 502]
+All values within range → Machine is operating correctly ✅
+
+If Std Dev were 5 ml → values would spread from ~490 to ~510
+→ Many bottles would be out of specification ❌
+```
+
+::: {.callout-important}
+## 🎯 Quality Control Rule
+Small std dev = consistent quality. Large std dev = inconsistent = defects and waste.
+The **mean tells you if you're on target; std dev tells you how consistent you are**.
+:::
+
+## Use Case 4 — Finance & Investment Risk
+
+**Scenario:** Monthly returns (%) for two investment funds:
+
+```
+Fund A: 2.1, 1.8, 2.3, 2.0, 1.9, 2.2, 2.0, 1.7, 2.1, 2.4
+Fund B: 5.2, −3.1, 8.4, −2.0, 6.7, −1.5, 9.1, −4.2, 7.3, 1.1
+```
+
+| | Fund A | Fund B |
+|-|--------|--------|
+| Mean return | **2.05%** | **2.70%** |
+| Std Dev | **0.21%** | **5.23%** |
+| Min/Max | 1.7% / 2.4% | −4.2% / 9.1% |
+
+**Analysis:** Fund B has higher average returns, but 25× more volatility than Fund A!
+
+- Conservative investor (near retirement) → Choose **Fund A**
+- Aggressive investor (young, long-term) → May choose **Fund B**
+
+::: {.callout-tip}
+## 💡 In finance, Std Dev = Risk
+The entire field of portfolio management is built on this insight!
+:::
+
+## Use Case 5 — Healthcare: Blood Pressure Study
+
+**Scenario:** Systolic blood pressure (mmHg) of 12 patients:
+```
+115, 122, 118, 135, 128, 120, 142, 119, 125, 130, 116, 180
+```
+
+```
+Mean   = 1550 / 12 ≈ 129.2 mmHg
+Median = (122 + 125) / 2 = 123.5 mmHg
+Std Dev ≈ 18.4 mmHg
+Q1 = 118.25,  Q3 = 131.25,  IQR = 13.0
+
+Outlier fence: 131.25 + 1.5×13 = 150.75
+→ 180 mmHg is an OUTLIER 🚨 → Hypertensive crisis! Needs immediate attention!
+```
+
+**Clinical insight:** Most patients are near-normal (median 123.5), but one patient at 180 mmHg requires urgent intervention. The outlier detection potentially saves a life!
+
+## Use Case 6 — Sports Performance Analysis
+
+**Scenario:** Goals scored by two football strikers across 12 matches:
+
+```
+Player A: 0, 1, 2, 1, 0, 2, 1, 1, 2, 1, 0, 1   → consistent scorer
+Player B: 0, 0, 0, 5, 0, 0, 6, 0, 0, 4, 0, 3   → feast-or-famine scorer
+```
+
+| Statistic | Player A | Player B |
+|-----------|---------|---------|
+| Total Goals | 12 | 18 |
+| Mean | 1.0 | 1.5 |
+| Median | 1.0 | 0.0 |
+| Std Dev | 0.74 | 2.23 |
+
+**Player B scores more total goals, but is highly unpredictable (high std dev). Player A is reliable.**
+
+Different teams need different types based on their game strategy!
+
+---
+
+# Part 5: Computing with Python
+
+## Python Setup — Manual Calculation
+
+```python
+# Computing all measures from scratch
+
+data = [85, 92, 78, 95, 88, 72, 91, 84, 76, 88]
+
+# Mean
+n = len(data)
+mean = sum(data) / n
+print(f"Count: {n}")
+print(f"Mean: {mean:.2f}")
+
+# Median
+sorted_data = sorted(data)
+if n % 2 == 1:
+    median = sorted_data[n // 2]
+else:
+    median = (sorted_data[n // 2 - 1] + sorted_data[n // 2]) / 2
+print(f"Median: {median}")
+
+# Mode (manual)
+from collections import Counter
+counts = Counter(data)
+max_count = max(counts.values())
+mode = [k for k, v in counts.items() if v == max_count]
+print(f"Mode: {mode}")
+```
+
+## Python — Range, Variance, Std Dev
+
+```python
+data = [85, 92, 78, 95, 88, 72, 91, 84, 76, 88]
+mean = sum(data) / len(data)
+
+# Range
+data_range = max(data) - min(data)
+print(f"Min: {min(data)},  Max: {max(data)}")
+print(f"Range: {data_range}")
+
+# Variance (sample — divide by n-1)
+deviations_squared = [(x - mean) ** 2 for x in data]
+variance = sum(deviations_squared) / (len(data) - 1)
+print(f"Variance: {variance:.4f}")
+
+# Standard Deviation
+std_dev = variance ** 0.5
+print(f"Standard Deviation: {std_dev:.4f}")
+
+# Show deviation table
+print("\n  x    |  x - mean  |  (x-mean)²")
+print("-" * 38)
+for x in data:
+    dev = x - mean
+    print(f"  {x}  |   {dev:+.2f}    |  {dev**2:.4f}")
+```
+
+## Python — Using the `statistics` Module
+
+```python
+import statistics
+
+data = [85, 92, 78, 95, 88, 72, 91, 84, 76, 88]
+
+# Central Tendency
+print("=== Central Tendency ===")
+print(f"Mean:   {statistics.mean(data):.2f}")
+print(f"Median: {statistics.median(data)}")
+print(f"Mode:   {statistics.mode(data)}")
+
+# Dispersion
+print("\n=== Dispersion ===")
+print(f"Variance (sample):  {statistics.variance(data):.4f}")
+print(f"Std Dev (sample):   {statistics.stdev(data):.4f}")
+print(f"Range:              {max(data) - min(data)}")
+
+# Quantiles (Python 3.8+)
+q = statistics.quantiles(data, n=4)
+iqr = q[2] - q[0]
+print(f"Q1:  {q[0]}")
+print(f"Q3:  {q[2]}")
+print(f"IQR: {iqr}")
+```
+
+## Python — Full Statistics Report Function
+
+```python
+import statistics
+import math
+
+def describe(data, label="Dataset"):
+    data = sorted(data)
+    n = len(data)
+    mean = statistics.mean(data)
+    med = statistics.median(data)
+    try:
+        mode_val = statistics.mode(data)
+    except:
+        mode_val = "None (all unique)"
+
+    variance = statistics.variance(data)
+    std_dev = statistics.stdev(data)
+    q = statistics.quantiles(data, n=4)
+    iqr = q[2] - q[0]
+    lower_fence = q[0] - 1.5 * iqr
+    upper_fence = q[2] + 1.5 * iqr
+    outliers = [x for x in data if x < lower_fence or x > upper_fence]
+
+    print(f"\n{'='*45}")
+    print(f"  Statistics Report: {label}")
+    print(f"{'='*45}")
+    print(f"  Count:      {n}")
+    print(f"  Min / Max:  {data[0]} / {data[-1]}")
+    print(f"  Range:      {data[-1] - data[0]}")
+    print(f"  ──────────────────────────────────────")
+    print(f"  Mean:       {mean:.4f}")
+    print(f"  Median:     {med}")
+    print(f"  Mode:       {mode_val}")
+    print(f"  ──────────────────────────────────────")
+    print(f"  Variance:   {variance:.4f}")
+    print(f"  Std Dev:    {std_dev:.4f}")
+    print(f"  Q1:         {q[0]}")
+    print(f"  Q3:         {q[2]}")
+    print(f"  IQR:        {iqr}")
+    print(f"  Fences:     [{lower_fence:.2f}, {upper_fence:.2f}]")
+    print(f"  Outliers:   {outliers if outliers else 'None'}")
+    print(f"{'='*45}")
+
+# Test it!
+exam_scores = [55, 62, 70, 73, 75, 78, 80, 82, 82, 85, 88, 90, 92, 95, 45]
+describe(exam_scores, "Exam Scores")
+```
+
+## Python — Comparing Two Datasets
+
+```python
+import statistics
+
+fund_a = [2.1, 1.8, 2.3, 2.0, 1.9, 2.2, 2.0, 1.7, 2.1, 2.4]
+fund_b = [5.2, -3.1, 8.4, -2.0, 6.7, -1.5, 9.1, -4.2, 7.3, 1.1]
+
+print("=== Investment Fund Comparison ===\n")
+print(f"{'Metric':<20} {'Fund A':>10} {'Fund B':>10}")
+print("-" * 42)
+print(f"{'Mean Return':<20} {statistics.mean(fund_a):>9.2f}% {statistics.mean(fund_b):>9.2f}%")
+print(f"{'Median Return':<20} {statistics.median(fund_a):>9.2f}% {statistics.median(fund_b):>9.2f}%")
+print(f"{'Std Dev (Risk)':<20} {statistics.stdev(fund_a):>9.2f}% {statistics.stdev(fund_b):>9.2f}%")
+print(f"{'Min Return':<20} {min(fund_a):>9.2f}% {min(fund_b):>9.2f}%")
+print(f"{'Max Return':<20} {max(fund_a):>9.2f}% {max(fund_b):>9.2f}%")
+print(f"{'Range':<20} {max(fund_a)-min(fund_a):>9.2f}% {max(fund_b)-min(fund_b):>9.2f}%")
+
+print("\nConclusion:")
+print(f"Fund B has higher mean ({statistics.mean(fund_b):.2f}%) but",
+      f"{statistics.stdev(fund_b)/statistics.stdev(fund_a):.0f}x more risk!")
+```
+
+## Final Challenge — Real Dataset Analysis
+
+**Your task:** Analyze this real sales dataset and produce a full report.
+
+```python
+import statistics
+
+# Monthly sales ($) for 3 products over 12 months
+product_A = [1200, 1350, 1100, 1450, 1300, 1250,
+             1380, 1420, 1280, 1310, 1190, 1360]
+
+product_B = [800, 2100, 650, 1900, 750, 2300,
+             900, 1800, 700, 2000, 850, 2200]
+
+product_C = [500, 520, 510, 490, 5000, 505,
+             495, 515, 500, 510, 498, 502]
+
+# ============================================
+# Your tasks:
+# 1. For EACH product, calculate and print:
+#    - Mean, Median, Mode
+#    - Range, Std Dev, IQR
+#    - Detect outliers using IQR method
+#
+# 2. Answer these questions in your code comments:
+#    - Which product has the most consistent sales?
+#    - Which product has an obvious outlier? What month?
+#    - Which product is most predictable for budgeting?
+#    - Would you use mean or median for each product? Why?
+# ============================================
+```
+
+::: {.callout-tip}
+## 💡 Hints
+- Call your `describe()` function on each product list
+- A high std dev relative to mean = unpredictable
+- An outlier might be a holiday promotion, data entry error, or one-time event
+:::
+
+---
+
+## Summary: Descriptive Statistics
+
+**What you've learned today:**
+
+| Category | Measures | Best Used When |
+|----------|---------|---------------|
+| **Central Tendency** | Mean, Median, Mode | Symmetric / Skewed / Categorical |
+| **Dispersion** | Range, Variance, Std Dev, IQR | Quick view / Precise / Outlier-robust |
+
+::: {.callout-important}
+## 🎯 Key Takeaways
+- **Mean** = fair average, sensitive to outliers
+- **Median** = middle value, robust to outliers
+- **Mode** = most common, works for categories
+- **Std Dev** = typical distance from mean, same units as data
+- **IQR** = spread of middle 50%, unaffected by outliers
+- Always **pair** central tendency with dispersion — one without the other is incomplete!
+- When in doubt: check for outliers first, then choose your measures
+:::
+
+## Common Mistakes to Avoid
+
+```
+❌ Reporting only the mean without any dispersion measure
+   → The mean of 75 means nothing without knowing the spread!
+
+❌ Using mean with heavily skewed or outlier-affected data
+   → Use median instead for income, house prices, wait times
+
+❌ Confusing variance and standard deviation units
+   → Variance is in squared units; std dev is in original units
+
+❌ Forgetting to sort before finding the median
+   → Median of unsorted data is meaningless!
+
+❌ Assuming mode always exists
+   → If all values are unique, there is no mode
+
+❌ Ignoring outliers without investigating them
+   → Outliers are often the most interesting and important data points!
+```
+
+## Quick Reference Card
+
+$$\bar{x} = \frac{\sum x_i}{n} \qquad \text{(Mean)}$$
+
+$$\text{Median} = \text{middle value of sorted data}$$
+
+$$s^2 = \frac{\sum(x_i - \bar{x})^2}{n-1} \qquad \text{(Variance)}$$
+
+$$s = \sqrt{s^2} \qquad \text{(Standard Deviation)}$$
+
+$$\text{IQR} = Q_3 - Q_1$$
+
+$$\text{Outlier fences: } Q_1 - 1.5 \times \text{IQR} \quad \text{and} \quad Q_3 + 1.5 \times \text{IQR}$$
+
